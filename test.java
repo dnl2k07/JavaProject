@@ -4,27 +4,27 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 
-class Test{
+class test{
+    String currentName;
+
     public static void main(String[] args) throws IOException {
         //scanner deklaras
-        Scanner scannerUwU = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         //csak sortores, hogy cleanebb legyen a konzol
         System.err.println("");
         //file beolvasas + feldarabolja oket
-        fileReading();
+        
+        System.out.println("Melyik metódust szeretnéd alkalmazni?");
+        System.out.println("(Login - L), (Register - R), (Get usernames - G), (Exit - E)");
+        String userChoice = scanner.nextLine();
+
 
         System.out.println("Hello idegen, hogyan szólíthatlak?");
-        String userName = scannerUwU.nextLine();
+        String userName = scanner.nextLine();
 
-        boolean ogUser = false;
-        for (String n : fileReading()) {
-            if (userName.equals(n)) {
-                ogUser=true;
-            }
-            break;
-        }
-        if (ogUser==true) {
+        
+        if (ableToLogin(userName)==true) {
             System.out.println("Ez a felhasználó már létezik, szóval nem adom hozzá UwU");
         }else{
             Files.writeString(Path.of("users.txt"), userName+";" ,StandardOpenOption.CREATE ,StandardOpenOption.APPEND);
@@ -39,13 +39,26 @@ class Test{
             System.out.println("Potentional user: "+ n +",");
         }
 
-        scannerUwU.close();
+        scanner.close();
     }
 
     public static String[] fileReading() throws IOException {
         String users = Files.readString(Path.of("users.txt"));
         String[] userNames = users.trim().split(";");
         return userNames;
+    }
+
+    public static boolean ableToLogin(String name) throws IOException {
+        boolean exists = false;
+        String[] names = fileReading();
+        if (names.length!=0) {
+            for (int i = 0; i < names.length; i++) {
+                if (name.equalsIgnoreCase(names[i])) {
+                    exists=true;
+                }
+            }
+        }
+        return exists;
     }
 
     public static String kiirFunction(String name){
