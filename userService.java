@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 
-class test{
+class userService{
     String currentName;
 
     public static void main(String[] args) throws IOException {
@@ -12,13 +12,39 @@ class test{
         Scanner scanner = new Scanner(System.in);
 
         //csak sortores, hogy cleanebb legyen a konzol
-        System.err.println("");
-        //file beolvasas + feldarabolja oket
+        System.err.println();
         
-        System.out.println("Melyik metódust szeretnéd alkalmazni?");
-        System.out.println("(Login - L), (Register - R), (Get usernames - G), (Exit - E)");
-        String userChoice = scanner.nextLine();
+        while (true) {
+            System.out.println("Melyik metódust szeretnéd alkalmazni?");
+            System.out.println("(Login - L), (Register - R), (Get usernames - G), (Exit - E)");
+            String userChoice = scanner.nextLine();
+            userChoice = userChoice.toUpperCase();
+            switch (userChoice) {
+                case "L":
+                    System.out.println("Login");
+                    break;
 
+                case "R":
+                    System.out.println("Register");
+                    break;
+
+                case "G":
+                    System.out.println("Getting users");
+                    break;
+
+                case "E":
+                    System.out.println("Exit");
+                    return;
+
+                default:
+                    System.out.println("Ilyen opció nincsen :D");
+                    break;
+            }
+            if (userChoice.equals("E")) {
+                break;
+            }
+        }
+        
 
         System.out.println("Hello idegen, hogyan szólíthatlak?");
         String userName = scanner.nextLine();
